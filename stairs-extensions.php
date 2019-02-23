@@ -21,6 +21,23 @@ define( 'REST_API_TUTORIAL_PLUGIN_VERSION', '1.0.0' );
 define( 'REST_API_TUTORIAL_PLUGIN_DIR', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 
 
+/**
+* Add REST API support to an already registered post type.
+*/
+function add_post_type_rest_support() {
+	global $wp_post_types;
+
+	//be sure to set this to the name of your post type!
+	$post_type_name = 'stairquest_stair';
+	if( isset( $wp_post_types[ $post_type_name ] ) ) {
+		$wp_post_types[$post_type_name]->show_in_rest = true;
+		// $wp_post_types[$post_type_name]->rest_base = $post_type_name;
+		// $wp_post_types[$post_type_name]->rest_controller_class = 'WP_REST_Posts_Controller';
+	}
+}
+add_action( 'init', 'add_post_type_rest_support', 25 );
+
+
 
 add_action( 'rest_api_init', function () {
 	require plugin_dir_path( __FILE__ ) . 'lib/class-wp-rest-stairs-controller.php';
