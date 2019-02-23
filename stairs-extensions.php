@@ -86,7 +86,7 @@ function get_stairtype_lov($type_id) {
 	if($stair_type) {
 		return $stair_type;
 	} else {
-		erro_log('Unknown stairtype id: '.$type_id);
+		error_log('Unknown stairtype id: '.$type_id);
 		return FALSE;
 	}
 }
