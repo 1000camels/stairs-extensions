@@ -104,22 +104,37 @@ class WP_REST_Stairs_Controller extends WP_REST_Posts_Controller {
 		// get photos
 	    $photos = get_pictures($stair_info['stair_id']);
 
+	    // get stories (comments)
+		$args = array(
+		    'post_id' => $stair->ID,
+		);
+		$comments = get_comments( $args );
+
+		dlog($stair);
+
 		$data = array(
 			'id'      => $stair->ID,
 			'name'    => $stair->post_title,
+			'current_name' => $stair_info['current_name'],
 			'content' => $stair->post_content,
-			'link'    => get_the_permalink( $stair->ID ),
-			'status'  => $stair->post_status,
 			'stair_id' => $stair_info['stair_id'],
+			'location' => $stair_info['location'],
+			'type' => get_stairtype_lov($stair_info['type']),
+			'handrails' => get_handrails( $stair_info['stair_id'] ),
+			'stepcount' => get_stepcount( $stair_info['stair_id'] ),
+			'comments' => $comments,
+			'photos' => $photos,
 			'lat' => $stair_info['lat'],
 			'lng' => $stair_info['lng'],
-			'location' => $stair_info['location'],
-			'type' => $stair_info['type'],
 			'mayor_id' => $stair_info['mayor_id'],
 			'polygon_data' => $stair_info['polygon_data'],
 			'completion' => $stair_info['completion'],
-			'current_name' => $stair_info['current_name'],
-			'photos' => $photos,
+			'link'    => get_the_permalink( $stair->ID ),
+			'status'  => $stair->post_status,
+			'post_date' => $stair->post_date,
+			'post_date_gmt' => $stair->post_date_gmt,
+			'post_modified' => $stair->post_modified,
+			'post_modified_gmt' => $stair->post_modified_gmt,
 		);
 
 		return $data;
